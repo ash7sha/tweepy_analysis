@@ -2,7 +2,7 @@ from tweepy import OAuthHandler
 from tweepy import Stream
 from tweepy.streaming import StreamListener
 
-import twitter_credentials
+from ash7sha_Twitter import twitter_credentials
 
 
 # Twitter authenticator class ###
@@ -47,6 +47,9 @@ class StdOutListener(StreamListener):
         return True
 
     def on_error(self, status):
+        if status == 402:
+            # Tweepy will send status 402 if application is creating too much of traffic. In this case returning false
+            return False
         print(status)
 
 
